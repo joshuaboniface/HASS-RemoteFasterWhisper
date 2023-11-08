@@ -1,5 +1,5 @@
 {
-  "name": "Faster Whisper",
+  "name": "Remote Faster Whisper",
   "render_readme": true,
-  "homeassistant": "2023.5.0"
+  "homeassistant": "2023.11.0"
 }

@@ -1,0 +1,19 @@
+{
+  "domain": "remote_faster_whisper",
+  "name": "Remote Faster Whisper",
+  "config_flow": true,
+  "documentation": "https://github.com/joshuaboniface/HASS-RemoteFasterWhisper",
+  "issue_tracker": "https://github.com/joshuaboniface/HASS-RemoteFasterWhisper/issues",
+  "codeowners": [
+    "@joshuaboniface"
+  ],
+  "dependencies": [
+  ],
+  "requirements": [
+    "numpy",
+    "soundfile",
+    "scipy"
+  ],
+  "version": "1.0.0",
+  "iot_class": "calculated"
+}

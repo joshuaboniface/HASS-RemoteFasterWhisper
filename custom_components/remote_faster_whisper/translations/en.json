@@ -1,0 +1,11 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "uri": "RemoteFasterWhisper URI (with API prefix)"
+        }
+      }
+    }
+  }
+}
