@@ -65,7 +65,7 @@ class RemoteFasterWhisperSTT(stt.SpeechToTextEntity):
         # Courtesy of UllcSahin on SO: https://stackoverflow.com/a/66367870/5253131
         _nchannels = int(metadata.channel)
         _framerate = int(metadata.sample_rate)
-        _sampwidth = 4 # This is a magic number; I don't know why 4 worked or where
+        _sampwidth = 2 # This is a magic number; I don't know why 2 worked or where
                        # to get that from the metadata, but ¯\_(ツ)_/¯
 
         WAVE_FORMAT_PCM = 0x0001
