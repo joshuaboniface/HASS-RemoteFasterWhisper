@@ -16,4 +16,30 @@ Or manually copy `remote_faster_whisper` folder from latest release to `/config/
 
 Settings > Integrations > Add Integration > Remote Faster Whisper
 
-The only configurable setting is your RFW URI. This must be the full URI of the RFW instance, including the API prefix, but without `/transcribe` (that is added automatically, in case I add more endpoints in the future).
+There are 3 configuration options:
+
+1. The RemoteFasterWhisper base URI. This should be the base URI (without the `/transcribe` endpoint!) of your RemoteFasterWhisper instance.
+
+2. The language of the RemoteFasterWhisper instance. This doesn't actually do anything and defaults to English (`en`), but is here for STT provider compatibility.
+
+3. A boolean to turn on or off Assist Pipeline name prefixing. See below.
+
+## Pipeline Name Prefixing
+
+This functionality requires a HomeAssistant version which includes [PR #104523](https://github.com/home-assistant/core/pull/104523).
+
+This feature allows the prefixing of text returned by RemoteFasterWhisper with the name of the Assist pipeline that called it.
+
+This can be used to build a series of Assist Pipelines which will match entities with a given prefix.
+
+### An example: my own HomeAssistant setup
+
+I have two rooms/areas, "Garage" and "Bedroom". Both have a Voice Assistant sattelite, and both have a series of entities which overlap, for example "heater".
+
+In HomeAssistant, these entries are called, respectively, "Garage heater" and "Bedroom heater".
+
+Without this option enabled, commands to either sattelite must include the room name as well, which results in longer voice commands and more possibility for error in the STT engine.
+
+With this option enabled, however, one could then create two assist pipelines, named "Garage" and "Bedroom", then assign the Voice Assistant sattelite for each room to its respective pipeline.
+
+The pipeline name will then be prepended automaticatlly to the text returned by RemoteFasterWhisper, allowing one to simply say "heater" in each location, which is then returned to the Assist pipeline as "Garage heater" or "Bedroom heater", respectively.
