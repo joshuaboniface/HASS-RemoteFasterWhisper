@@ -15,6 +15,7 @@ class ConfigFlowHandler(ConfigFlow, domain=DOMAIN):
                 {
                     vol.Required("uri", default=""): str,
                     vol.Required("language", default="en"): str,
+                    vol.Required("append_pipeline", default=True): bool,
                 },
             ),
             errors=errors,

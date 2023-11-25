@@ -26,8 +26,10 @@ async def async_setup_entry(
 
 class RemoteFasterWhisperSTT(stt.SpeechToTextEntity):
     def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry) -> None:
+        self.config: ConfigEntry = config_entry
         self.uri: str = config_entry.data["uri"]
         self.language: str = config_entry.data["language"]
+        self.append_pipeline: bool = config_entry.data["append_pipeline"]
 
         self.hass = hass
 
@@ -95,7 +97,7 @@ class RemoteFasterWhisperSTT(stt.SpeechToTextEntity):
     async def async_process_audio_stream(
         self, metadata: stt.SpeechMetadata, stream: AsyncIterable[bytes]
     ) -> stt.SpeechResult:
-        _LOGGER.info("process_audio_stream start")
+        _LOGGER.info(f"process_audio_stream start, config: {self.config.data}")
 
         audio = b""
         async for chunk in stream:
@@ -111,6 +113,9 @@ class RemoteFasterWhisperSTT(stt.SpeechToTextEntity):
             return stt.SpeechResult("", stt.SpeechResultState.ERROR)
 
         text = jret.get("text")
+
+        if self.append_pipeline:
+            text = f"{metadata.pipeline_name} {text}"
 
         _LOGGER.info(f"process_audio_stream end: {text}")
 

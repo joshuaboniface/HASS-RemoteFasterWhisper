@@ -3,7 +3,9 @@
     "step": {
       "user": {
         "data": {
-          "uri": "RemoteFasterWhisper URI (with API prefix)"
+          "uri": "RemoteFasterWhisper base URI (with API prefix)",
+          "language": "Language of the RemoteFasterWhisper instance",
+          "append_pipeline": "Append pipeline name to returned text (for room/area matching)"
         }
       }
     }
