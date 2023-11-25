@@ -34,12 +34,12 @@ This can be used to build a series of Assist Pipelines which will match entities
 
 ### An example: my own HomeAssistant setup
 
-I have two rooms/areas, "Garage" and "Bedroom". Both have a Voice Assistant sattelite, and both have a series of entities which overlap, for example "heater".
+I have two rooms/areas, "Garage" and "Bedroom". Both have a Voice Assistant satellite, and both have a series of entities which overlap, for example "heater".
 
 In HomeAssistant, these entries are called, respectively, "Garage heater" and "Bedroom heater".
 
-Without this option enabled, commands to either sattelite must include the room name as well, which results in longer voice commands and more possibility for error in the STT engine.
+Without this option enabled, commands to either satellite must include the room name as well, which results in longer voice commands and more possibility for error in the STT engine.
 
-With this option enabled, however, one could then create two assist pipelines, named "Garage" and "Bedroom", then assign the Voice Assistant sattelite for each room to its respective pipeline.
+With this option enabled, however, one could then create two assist pipelines, named "Garage" and "Bedroom", then assign the Voice Assistant satellite for each room to its respective pipeline.
 
-The pipeline name will then be prepended automaticatlly to the text returned by RemoteFasterWhisper, allowing one to simply say "heater" in each location, which is then returned to the Assist pipeline as "Garage heater" or "Bedroom heater", respectively.
+The pipeline name will then be pre-pended automatically to the text returned by RemoteFasterWhisper, allowing one to simply say "heater" in each location, which is then returned to the Assist pipeline as "Garage heater" or "Bedroom heater", respectively.
