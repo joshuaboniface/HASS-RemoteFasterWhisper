@@ -34,14 +34,17 @@ class RemoteFasterWhisperSTT(stt.SpeechToTextEntity):
         self.result_prefix: str = config_entry.data["result_prefix"]
         
         if self.result_prefix:
-            unique_id_prefix = "_" + sub(r"[',\. ]". "_", self.result_prefix)
+            unique_id_prefix = "_" + sub(r"[',\. ]", "_", self.result_prefix)
         else:
             unique_id_prefix = ""
 
         self.hass = hass
 
-        self._attr_name = f"Remote Faster Whisper"
-        self._attr_unique_id = f"{config_entry.entry_id[:7]}{unique_id_prefix}-stt}"
+        if self.result_prefix:
+            self._attr_name = f"Remote Faster Whisper {self.result_prefix}"
+        else:
+            self._attr_name = f"Remote Faster Whisper"
+        self._attr_unique_id = f"{config_entry.entry_id[:7]}{unique_id_prefix}-stt"
 
     @property
     def supported_languages(self) -> list[str]:
