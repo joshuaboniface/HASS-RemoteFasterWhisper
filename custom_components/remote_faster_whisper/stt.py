@@ -3,6 +3,8 @@ import logging
 
 import struct
 
+from re import sub
+
 from requests import post as requests_post
 from collections.abc import AsyncIterable
 
@@ -29,12 +31,17 @@ class RemoteFasterWhisperSTT(stt.SpeechToTextEntity):
         self.config: ConfigEntry = config_entry
         self.uri: str = config_entry.data["uri"]
         self.language: str = config_entry.data["language"]
-        self.append_pipeline: bool = config_entry.data["append_pipeline"]
+        self.result_prefix: str = config_entry.data["result_prefix"]
+        
+        if self.result_prefix:
+            unique_id_prefix = "_" + sub(r"[',\. ]". "_", self.result_prefix)
+        else:
+            unique_id_prefix = ""
 
         self.hass = hass
 
         self._attr_name = f"Remote Faster Whisper"
-        self._attr_unique_id = f"{config_entry.entry_id[:7]}-stt"
+        self._attr_unique_id = f"{config_entry.entry_id[:7]}{unique_id_prefix}-stt}"
 
     @property
     def supported_languages(self) -> list[str]:
@@ -114,8 +121,8 @@ class RemoteFasterWhisperSTT(stt.SpeechToTextEntity):
 
         text = jret.get("text")
 
-        if self.append_pipeline:
-            text = f"{metadata.pipeline_name} {text}"
+        if self.result_prefix:
+            text = f"{self.result_prefix} {text}"
 
         _LOGGER.info(f"process_audio_stream end: {text}")
 

@@ -8,7 +8,7 @@ It's a custom component because I don't feel like learning how to "properly" pac
 
 ## Installation
 
-[HACS](https://hacs.xyz/) > Integrations > 3 dots (upper top corner) > Custom repositories > URL: `joshuaboniface/HASS-RemoteFasterWhisper`, Category: Integration > Add > wait > Remote Faster Whisper > Install
+[HACS](https://hacs.xyz/) > Integrations > 3 dots (upper top corner) > Custom repositories > URL: `joshuaboniface/HASS-Remote Faster Whisper`, Category: Integration > Add > wait > Remote Faster Whisper > Install
 
 Or manually copy `remote_faster_whisper` folder from latest release to `/config/custom_components` folder.
 
@@ -18,19 +18,17 @@ Settings > Integrations > Add Integration > Remote Faster Whisper
 
 There are 3 configuration options:
 
-1. The RemoteFasterWhisper base URI. This should be the base URI (without the `/transcribe` endpoint!) of your RemoteFasterWhisper instance.
+1. The Remote Faster Whisper base URI. This should be the base URI (without the `/transcribe` endpoint!) of your Remote Faster Whisper instance.
 
-2. The language of the RemoteFasterWhisper instance. This doesn't actually do anything and defaults to English (`en`), but is here for STT provider compatibility.
+2. The language of the Remote Faster Whisper instance. This doesn't actually do anything and defaults to English (`en`), but is here for STT provider compatibility.
 
-3. A boolean to turn on or off Assist Pipeline name prefixing. See below.
+3. A "Result Prefix" string to prepend to any returned text.
 
-## Pipeline Name Prefixing
+## Result Prefixing
 
-This functionality requires a HomeAssistant version which includes [PR #104523](https://github.com/home-assistant/core/pull/104523).
+This feature allows the prefixing of text returned by Remote Faster Whisper with some arbitrary text, for instance the name of a room or location in HomeAssistant.
 
-This feature allows the prefixing of text returned by RemoteFasterWhisper with the name of the Assist pipeline that called it.
-
-This can be used to build a series of Assist Pipelines which will match entities with a given prefix.
+This can be used to build a series of STT providers and Assist pipelines which will match entities with a given prefix.
 
 ### An example: my own HomeAssistant setup
 
@@ -38,8 +36,24 @@ I have two rooms/areas, "Garage" and "Bedroom". Both have a Voice Assistant sate
 
 In HomeAssistant, these entries are called, respectively, "Garage heater" and "Bedroom heater".
 
-Without this option enabled, commands to either satellite must include the room name as well, which results in longer voice commands and more possibility for error in the STT engine.
+Without this ability, commands to either satellite must include the room name as well, which results in longer and more cumbersome voice commands and more possibility for error in the STT engine.
 
-With this option enabled, however, one could then create two assist pipelines, named "Garage" and "Bedroom", then assign the Voice Assistant satellite for each room to its respective pipeline.
+With this ability, however, one could then:
 
-The pipeline name will then be pre-pended automatically to the text returned by RemoteFasterWhisper, allowing one to simply say "heater" in each location, which is then returned to the Assist pipeline as "Garage heater" or "Bedroom heater", respectively.
+* Create two Remote Faster Whisper STT provider instances, with the "Result Prefix"es of "Garage" and "Bedroom" respectively.
+
+* Create two separate Assist pipelines, one for each location, with the STT provider set to the corresponding "Garage" and "Bedroom" STT providers.
+
+* Assign the Voice Assistant satellite for each room to its respective pipeline.
+
+This would thus enable room-specific results, for instance in the Garage, speaking "heater on" would translate to "Garage heater on", thus matching the "Garage heater" entity without ever needing to say the word "Garage".
+
+### Caveats
+
+The major caveats of this approach are:
+
+* All entities must named accordingly. For example, if your entity is in the "Bedroom" zone, it **must** start with the word "Bedroom" or it will not match.
+
+* You cannot control entities outside of the zone with the sattelite, as the entity will be prepended unconditionally. For example, trying to control the "Garage heater" from the "Bedroom" voice satellite/pipeline is impossible.
+
+Future versions may attempt to work around these issues intelligently.
