@@ -8,7 +8,7 @@ It's a custom component because I don't feel like learning how to "properly" pac
 
 ## Installation
 
-[HACS](https://hacs.xyz/) > Integrations > 3 dots (upper top corner) > Custom repositories > URL: `joshuaboniface/HASS-Remote Faster Whisper`, Category: Integration > Add > wait > Remote Faster Whisper > Install
+[HACS](https://hacs.xyz/) > Integrations > 3 dots (upper top corner) > Custom repositories > URL: `joshuaboniface/HASS-RemoteFasterWhisper`, Category: Integration > Add > wait > Remote Faster Whisper > Install
 
 Or manually copy `remote_faster_whisper` folder from latest release to `/config/custom_components` folder.
 
