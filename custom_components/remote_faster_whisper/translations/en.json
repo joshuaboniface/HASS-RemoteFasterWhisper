@@ -4,8 +4,7 @@
       "user": {
         "data": {
           "uri": "RemoteFasterWhisper base URI (with API prefix)",
-          "language": "Language of the RemoteFasterWhisper instance",
-          "result_prefix": "Add this string to the start of any STT results (for entity room/area matching)"
+          "language": "Language of the RemoteFasterWhisper instance"
         }
       }
     }

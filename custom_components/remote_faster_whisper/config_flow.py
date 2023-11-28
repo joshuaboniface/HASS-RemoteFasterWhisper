@@ -15,7 +15,6 @@ class ConfigFlowHandler(ConfigFlow, domain=DOMAIN):
                 {
                     vol.Required("uri", default=""): str,
                     vol.Required("language", default="en"): str,
-                    vol.Required("result_prefix", default=""): str,
                 },
             ),
             errors=errors,
