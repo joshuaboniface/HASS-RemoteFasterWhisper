@@ -29,22 +29,42 @@ async def async_setup_entry(
 class RemoteFasterWhisperSTT(stt.SpeechToTextEntity):
     def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry) -> None:
         self.config: ConfigEntry = config_entry
-        self.uri: str = config_entry.data["uri"]
-        self.language: str = config_entry.data["language"]
-        self.result_prefix: str = config_entry.data["result_prefix"]
+        self.hass = hass
+        self._update_config_from_entry()
         
         if self.result_prefix:
             unique_id_prefix = "_" + sub(r"[',\. ]", "_", self.result_prefix)
         else:
             unique_id_prefix = ""
 
-        self.hass = hass
-
         if self.result_prefix:
             self._attr_name = f"Remote Faster Whisper {self.result_prefix}"
         else:
             self._attr_name = f"Remote Faster Whisper"
         self._attr_unique_id = f"{config_entry.entry_id[:7]}{unique_id_prefix}-stt"
+
+    def _update_config_from_entry(self):
+        """Update configuration from the config entry."""
+        self.uri: str = self.config.data["uri"]
+        self.language: str = self.config.data["language"]
+        self.result_prefix: str = self.config.data["result_prefix"]
+
+    async def async_added_to_hass(self):
+        """Handle entity added to hass."""
+        self.config.async_on_unload(
+            self.config.add_update_listener(self._async_config_updated)
+        )
+
+    async def _async_config_updated(self, hass: HomeAssistant, config_entry: ConfigEntry):
+        """Handle config update."""
+        self.config = config_entry
+        self._update_config_from_entry()
+        
+        # Update the name if result_prefix changed
+        if self.result_prefix:
+            self._attr_name = f"Remote Faster Whisper {self.result_prefix}"
+        else:
+            self._attr_name = f"Remote Faster Whisper"
 
     @property
     def supported_languages(self) -> list[str]:
@@ -123,9 +143,6 @@ class RemoteFasterWhisperSTT(stt.SpeechToTextEntity):
             return stt.SpeechResult("", stt.SpeechResultState.ERROR)
 
         text = jret.get("text")
-
-        if self.result_prefix:
-            text = f"{self.result_prefix}: {text}"
 
         _LOGGER.info(f"process_audio_stream end: {text}")
 

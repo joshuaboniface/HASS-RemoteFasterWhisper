@@ -4,9 +4,20 @@
       "user": {
         "data": {
           "uri": "RemoteFasterWhisper base URI (with API prefix)",
-          "language": "Language of the RemoteFasterWhisper instance"
+          "language": "Language of the RemoteFasterWhisper instance",
+          "result_prefix": "A prefix (plus colon) to prepend to any result text"
+        }
+      },
+      "reconfigure": {
+        "data": {
+          "uri": "RemoteFasterWhisper base URI (with API prefix)",
+          "language": "Language of the RemoteFasterWhisper instance",
+          "result_prefix": "A prefix (plus colon) to prepend to any result text"
         }
       }
+    },
+    "abort": {
+      "reconfigure_successful": "Configuration updated successfully"
     }
   }
 }
