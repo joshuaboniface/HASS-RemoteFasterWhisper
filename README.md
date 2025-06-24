@@ -24,6 +24,8 @@ There are 3 configuration options:
 
 ## Multiple Instances and Response Prefixes
 
+**NOTE**: The functionality of location awareness was improved significantly in HASS 2025.1 and newer, and this functionality is no longer really needed. This section is kept for posterity and, as far as I can tell, it does not hurt.
+
 This solution was borne out of an issue I ran into when using HomeAssistant Assist pipelines with multiple rooms.
 
 Consider for instance, two rooms: Joshua's Bedroom and Basement. Both have their own unique set of lights, etc., but what if you wanted to have a command "all lights off" for both places? Or a fan named "overhead fan" in both places?
